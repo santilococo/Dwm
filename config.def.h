@@ -46,6 +46,8 @@ static const int attachdirection = 2;    /* 0 default, 1 above, 2 aside, 3 below
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
