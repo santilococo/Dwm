@@ -3,12 +3,15 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+//static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
+//static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 30;       /* vert outer gap between windows and screen edge */
+//static const unsigned int gappov    = 30;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappov    = 15;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -109,7 +112,9 @@ static const char *mutevol[]   = { "pulsemixer" , "--toggle-mute", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	//{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("dmenu_run") },
+	{ MODKEY|ShiftMask,	        XK_p,      spawn,          SHCMD("dmenu_terminal") },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -161,6 +166,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY,			XK_q,      spawn,          SHCMD("kill -15 $(ps -u $USER -o pid,%mem,%cpu,command | sort -b -k2 -r | sed -n '1!p' | cut -b 1-75 | dmenu -l 15") },
 
 	// https://gist.github.com/palopezv/efd34059af6126ad970940bcc6a90f2e
 	// In my case, these XF86XK keys are FN+F2, FN+F4, FN+F3 respectively...
@@ -174,6 +180,10 @@ static Key keys[] = {
 	{ 0,                       XF86XK_AudioLowerVolume, spawn,  SHCMD("pulsemixer --change-volume -1; sigdwmblocks 2") },
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn,  SHCMD("pulsemixer --change-volume +1; sigdwmblocks 2") },
 	{ 0,                       XF86XK_AudioMute,	    spawn,  SHCMD("pulsemixer --toggle-mute; sigdwmblocks 2") },
+	//{ 0,                       XF86XK_Favorites,	    spawn,  SHCMD("maim -s | xclip -selection clipboard -t image/png") },
+	{ 0,                       XK_Print,	    spawn,  SHCMD("maim -s | xclip -selection clipboard -t image/png") },
+	{ MODKEY,                       XK_Print,	    spawn,  SHCMD("maim | xclip -selection clipboard -t image/png") },
+
 
 	{ MODKEY,                       XK_v,	    spawn,       SHCMD("clipmenu") },
 };
